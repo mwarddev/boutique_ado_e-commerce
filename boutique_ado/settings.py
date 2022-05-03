@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-=%4-t)+4su^ou+8$==u1q=+d!i(ri%!pn+3^tifnj@f)tlvg@$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['boutique-ado-mwarddev.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -117,15 +117,20 @@ LOGIN_REDIRECT_URL = '/'
 WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 
 
-Database
-https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # DATABASES = {
 #     'default': dj_database_url.parse('postgres://pinewlkwzdzskf:276527155dc1f149574e349a813e48201ad0bc7a8dcc83d5cb7a3024fc9fc57c@ec2-99-80-170-190.eu-west-1.compute.amazonaws.com:5432/d111fpv95dvipt')
